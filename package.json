@@ -48,3 +48,8 @@
     { "source": "/(.*)", "destination": "/" }
   ]
 }
+
+"scripts": {
+  "start": "node server/server.js",
+  "build": "react-scripts build"
+}
