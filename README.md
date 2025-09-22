@@ -124,20 +124,38 @@ shree-bharatraj-corporation/
 
 ## Deployment
 
-### Frontend (React)
-Deploy to services like:
-- Vercel
-- Netlify
-- GitHub Pages
+### Vercel (Frontend + Serverless API)
 
-### Backend (Node.js)
-Deploy to services like:
-- Heroku
-- Railway
-- DigitalOcean
-- AWS EC2
+This project includes serverless API functions for email sending under `api/`. It is ready for Vercel deployment.
 
-Make sure to set environment variables in your deployment platform.
+Files used by Vercel:
+- `vercel.json` – rewrites for API and SPA routing
+- `api/health.js` – health check endpoint
+- `api/send-email.js` – sends contact emails via Nodemailer
+- `api/test-email.js` – test email endpoint (disabled in production)
+- `api/_lib/emailTemplates.js` – shared email templates
+
+Required environment variables (set in Vercel → Project → Settings → Environment Variables):
+- `SMTP_HOST` (e.g. smtp.gmail.com)
+- `SMTP_PORT` (e.g. 587)
+- `SMTP_USER` (email/account username)
+- `SMTP_PASS` (app password or SMTP password)
+- `RECIPIENT_EMAIL` (destination for contact form messages)
+- `NODE_ENV` = `production`
+
+Deploy steps:
+1. Push this repository to GitHub/GitLab/Bitbucket.
+2. In Vercel, click New Project → Import the repo.
+3. Build command: `npm run build` (auto-detected for Create React App). Output directory: `build`.
+4. Add the environment variables for Production and Preview.
+5. Deploy. The SPA will be served, and API will be available at `/api/*`.
+
+Local testing with Vercel CLI (optional):
+```
+npm i -g vercel
+vercel dev
+```
+Then open http://localhost:3000 and check http://localhost:3000/api/health
 
 ## Support
 
