@@ -1239,6 +1239,56 @@ const ContactForm = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState('');
+  const [errors, setErrors] = useState({
+    name: '',
+    company: '',
+    email: '',
+    phone: '',
+    message: ''
+  });
+
+  const validateEmail = (value) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
+    return emailRegex.test(value);
+  };
+
+  const validatePhone = (value) => {
+    // Allows optional +, spaces, dashes, and digits; requires 7-15 digits total
+    const digitsOnly = (value || '').replace(/\D/g, '');
+    return digitsOnly.length >= 7 && digitsOnly.length <= 15;
+  };
+
+  const validateForm = (data) => {
+    const trimmed = {
+      name: (data.name || '').trim(),
+      company: (data.company || '').trim(),
+      email: (data.email || '').trim(),
+      phone: (data.phone || '').trim(),
+      message: (data.message || '').trim()
+    };
+
+    const newErrors = { name: '', company: '', email: '', phone: '', message: '' };
+
+    if (!trimmed.name || trimmed.name.length < 2) {
+      newErrors.name = 'Please enter your full name (min 2 characters).';
+    }
+    if (!trimmed.company) {
+      newErrors.company = 'Please enter your company name.';
+    }
+    if (!trimmed.email || !validateEmail(trimmed.email)) {
+      newErrors.email = 'Please enter a valid email (e.g., name@example.com).';
+    }
+    if (!trimmed.phone || !validatePhone(trimmed.phone)) {
+      newErrors.phone = 'Please enter a valid phone number (7-15 digits).';
+    }
+    if (!trimmed.message || trimmed.message.length < 10) {
+      newErrors.message = 'Message should be at least 10 characters.';
+    }
+
+    setErrors(newErrors);
+
+    return Object.values(newErrors).every((msg) => msg === '');
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -1246,6 +1296,10 @@ const ContactForm = () => {
       ...prev,
       [name]: value
     }));
+    // Clear field error on change
+    if (errors[name]) {
+      setErrors(prev => ({ ...prev, [name]: '' }));
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -1253,13 +1307,29 @@ const ContactForm = () => {
     setIsSubmitting(true);
     setSubmitStatus('');
 
+    // Trim and validate before submit
+    const payload = {
+      name: formData.name.trim(),
+      company: formData.company.trim(),
+      email: formData.email.trim(),
+      phone: formData.phone.trim(),
+      message: formData.message.trim()
+    };
+
+    const isValid = validateForm(payload);
+    if (!isValid) {
+      setIsSubmitting(false);
+      setSubmitStatus('error');
+      return;
+    }
+
     try {
       const response = await fetch('http://localhost:5000/api/send-email', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData)
+        body: JSON.stringify(payload)
       });
 
       const result = await response.json();
@@ -1273,6 +1343,7 @@ const ContactForm = () => {
           phone: '',
           message: ''
         });
+        setErrors({ name: '', company: '', email: '', phone: '', message: '' });
       } else {
         setSubmitStatus('error');
         console.error('Email sending failed:', result.message);
@@ -1293,45 +1364,50 @@ const ContactForm = () => {
         placeholder="Name"
         value={formData.name}
         onChange={handleInputChange}
-        className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm md:text-base"
+        className={`w-full p-3 rounded-lg border ${errors.name ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-2 ${errors.name ? 'focus:ring-red-500' : 'focus:ring-indigo-500'} text-sm md:text-base`}
         required
       />
+      {errors.name && <p className="text-red-600 text-xs md:text-sm">{errors.name}</p>}
       <input
         type="text"
         name="company"
         placeholder="Company"
         value={formData.company}
         onChange={handleInputChange}
-        className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm md:text-base"
+        className={`w-full p-3 rounded-lg border ${errors.company ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-2 ${errors.company ? 'focus:ring-red-500' : 'focus:ring-indigo-500'} text-sm md:text-base`}
         required
       />
+      {errors.company && <p className="text-red-600 text-xs md:text-sm">{errors.company}</p>}
       <input
         type="email"
         name="email"
         placeholder="Email"
         value={formData.email}
         onChange={handleInputChange}
-        className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm md:text-base"
+        className={`w-full p-3 rounded-lg border ${errors.email ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-2 ${errors.email ? 'focus:ring-red-500' : 'focus:ring-indigo-500'} text-sm md:text-base`}
         required
       />
+      {errors.email && <p className="text-red-600 text-xs md:text-sm">{errors.email}</p>}
       <input
         type="tel"
         name="phone"
         placeholder="Phone"
         value={formData.phone}
         onChange={handleInputChange}
-        className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm md:text-base"
+        className={`w-full p-3 rounded-lg border ${errors.phone ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-2 ${errors.phone ? 'focus:ring-red-500' : 'focus:ring-indigo-500'} text-sm md:text-base`}
         required
       />
+      {errors.phone && <p className="text-red-600 text-xs md:text-sm">{errors.phone}</p>}
       <textarea
         name="message"
         placeholder="Message"
         rows="4"
         value={formData.message}
         onChange={handleInputChange}
-        className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm md:text-base resize-none"
+        className={`w-full p-3 rounded-lg border ${errors.message ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-2 ${errors.message ? 'focus:ring-red-500' : 'focus:ring-indigo-500'} text-sm md:text-base resize-none`}
         required
       ></textarea>
+      {errors.message && <p className="text-red-600 text-xs md:text-sm">{errors.message}</p>}
       
       {/* Status Messages */}
       {submitStatus === 'success' && (
