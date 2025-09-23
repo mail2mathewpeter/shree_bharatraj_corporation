@@ -1230,7 +1230,7 @@ const ClientsSection = () => {
 };
 
 const ContactForm = () => {
-  const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+  const API_URL = process.env.REACT_APP_API_URL || 'https://client1-server.onrender.com'
   const [formData, setFormData] = useState({
     name: '',
     company: '',
