@@ -1365,7 +1365,7 @@ const ContactForm = () => {
     }
 
     try {
-      const response = await fetch("https://client1-server.onrender.com//api/send-email", {
+      const response = await fetch("https://client1-server.onrender.com/api/send-email", {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
