@@ -1263,7 +1263,7 @@ const ClientsSection = () => {
 };
 
 const ContactForm = () => {
-  const API_URL = process.env.REACT_APP_API_URL || 'https://client1-server.onrender.com'
+  const API_URL = process.env.REACT_APP_API_URL || 'https://serverapi-phi.vercel.app'
   const [formData, setFormData] = useState({
     name: '',
     company: '',
@@ -1365,7 +1365,7 @@ const ContactForm = () => {
     }
 
     try {
-      const response = await fetch("https://client1-server.onrender.com/api/send-email", {
+      const response = await fetch("https://serverapi-phi.vercel.app/api/send-email", {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
