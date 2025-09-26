@@ -1268,7 +1268,7 @@ const ContactForm = () => {
     company: '',
     email: '',
     phone: '',
-    address: '',
+    // address: '',
     message: ''
   });
 
