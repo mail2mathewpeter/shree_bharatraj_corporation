@@ -78,9 +78,19 @@ const App = () => {
     <div className="bg-gray-100 font-sans antialiased text-gray-800 min-h-screen">
       {/* Navigation Bar */}
       <nav className="bg-white/90 backdrop-blur-md sticky top-0 z-50 shadow-lg border-b border-gray-200/50">
-        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="text-lg sm:text-xl md:text-2xl font-bold bg-gradient-to-r from-indigo-600 to-blue-600 bg-clip-text text-transparent">
-            Shree Bharatraj Corporation
+        <div className="container mx-auto px-4 py-3.5 flex items-center justify-between">
+          <div className="flex items-center">
+            <div className="ml-10 cursor-pointer" onClick={() => setCurrentPage('home')}>
+              <img 
+                src="/attachments/logo.jpeg" 
+                alt="Shree Bharatraj Corporation Logo" 
+                className="w-36 h-auto md:w-40 lg:w-44 object-contain transition-all duration-300 hover:scale-105 hover:brightness-110"
+                onError={(e) => {
+                  console.log('Logo failed to load');
+                  e.target.style.display = 'none';
+                }}
+              />
+            </div>
           </div>
           
           {/* Desktop Navigation */}
@@ -107,6 +117,7 @@ const App = () => {
           >
             {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
+        
         </div>
 
         {/* Mobile Navigation Menu */}
@@ -342,7 +353,8 @@ const HomeSection = ({ setCurrentPage }) => {
             </div>
             <div>
               <span className="font-bold text-gray-800">Quality You Can Trust</span>
-              <p className="text-gray-600 text-sm">All products meet strict ISI & IBR standards</p>
+              <p className="text-gray-600 text-sm">All vendors meet strict ISI and IBR standards
+              </p>
             </div>
           </div>
           
@@ -352,7 +364,8 @@ const HomeSection = ({ setCurrentPage }) => {
             </div>
             <div>
               <span className="font-bold text-gray-800">ISO 9001 Certified</span>
-              <p className="text-gray-600 text-sm">Ensuring safety, consistency, and durability</p>
+              <p className="text-gray-600 text-sm">Certified vendors to ensure safety, consistency and durability 
+              </p>
             </div>
           </div>
         </div>
@@ -370,7 +383,8 @@ const HomeSection = ({ setCurrentPage }) => {
            <SectionHeader title="Quality & Certifications" subtitle="Our commitment to excellence and industry standards." />
            <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-xl p-6 md:p-8 lg:p-12 mb-8 md:mb-12 border border-indigo-200/50">
          <p className="text-base md:text-lg leading-relaxed text-gray-700 mb-6 md:mb-8 text-center">
-           We meet the highest industry standards to ensure safety and performance.
+         We associate with the vendors with highest industry standards to ensure safety and precision and performance 
+
          </p>
          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-6 md:mb-8">
            <QualityBadge title="ISO 9001:2015 Certified" />
@@ -531,13 +545,19 @@ const HomeSection = ({ setCurrentPage }) => {
             <h3 className="text-lg md:text-xl font-bold text-gray-800 mb-4">Head Office</h3>
             <div className="space-y-3">
               <p className="text-sm md:text-base text-gray-600">
-                <span className="font-semibold">Address:</span> [Insert Address]
+                <span className="font-semibold">Address:</span> 138, Kumaranaasan Nagar Post Box No. 2061 Kadavanthara P. O. Cochin- 682020
               </p>
               <p className="text-sm md:text-base text-gray-600">
-                <span className="font-semibold">Phone:</span> [Insert Number]
+                <span className="font-semibold">Tel:</span> 91-484-2203239
               </p>
               <p className="text-sm md:text-base text-gray-600">
-                <span className="font-semibold">Email:</span> [Insert Email]
+                <span className="font-semibold">Mobile:</span> 9847031023
+              </p>
+              <p className="text-sm md:text-base text-gray-600">
+                <span className="font-semibold">Fax:</span> 91-484-2204385
+              </p>
+              <p className="text-sm md:text-base text-gray-600">
+                <span className="font-semibold">Email:</span> shreebharatraj@gmail.com
               </p>
             </div>
           </div>
@@ -595,11 +615,13 @@ const AboutSection = () => (
         </li>
         <li className="flex items-start">
           <ChevronRight className="flex-shrink-0 mt-1 text-indigo-600" size={20} />
-          <span className="ml-2 text-gray-700"><span className="font-bold">Quality You Can Trust</span> – All products meet strict ISI & IBR standards.</span>
+          <span className="ml-2 text-gray-700"><span className="font-bold">Quality You Can Trust</span> – All vendors meet strict ISI and IBR standards.
+          </span>
         </li>
         <li className="flex items-start">
           <ChevronRight className="flex-shrink-0 mt-1 text-indigo-600" size={20} />
-          <span className="ml-2 text-gray-700"><span className="font-bold">ISO 9001 Certified</span> – Ensuring safety, consistency, and durability.</span>
+          <span className="ml-2 text-gray-700"><span className="font-bold">ISO 9001 Certified</span> – Certified vendors to ensure safety, consistency and durability 
+          .</span>
         </li>
       </ul>
       <p className="text-base md:text-lg leading-relaxed text-gray-700 mt-6">
@@ -633,7 +655,7 @@ const ProductsSection = ({ setSelectedProduct }) => {
     },
     {
       title: 'Pipes & Pipe Systems',
-      supplier: 'Chamunda Plastics, Keshar Steel India',
+      supplier: 'Chamunda Plastics, Poonam Industries',
       description: 'Our range of plastic and metal piping systems offers durability, chemical resistance, and versatility for a wide variety of applications. Whether it\'s high-pressure industrial use or specialized fluid transfer, we deliver the right piping solutions.',
       features: [
         'Superior chemical resistance',
@@ -748,8 +770,8 @@ const ProductsSection = ({ setSelectedProduct }) => {
       image: '7_.jpg',
     },
     {
-      title: 'Protective Covers & Sheets',
-      supplier: 'Dwarkadas Velji Talpatriwala',
+      title: 'Nylon & HDPE Tarpaulin',
+      supplier: 'Lamifab Industries, Shivam Textiles & Proofing Industries',
       description: 'Our protective tarpaulins and industrial covers safeguard machinery, goods, and infrastructure against harsh weather and environmental conditions. Available in various materials and sizes, they deliver reliable protection wherever needed.',
       features: [
         'Weather-resistant materials',
@@ -787,7 +809,7 @@ const ProductsSection = ({ setSelectedProduct }) => {
     },
     {
       title: 'Workplace Safety & First Aid',
-      supplier: 'AOSSPL, Safe Dot India, ATG',
+      supplier: 'AOSSPL, ATG',
       description: 'Workplace safety is non-negotiable. We supply a complete range of PPE and first aid equipment to protect workers from hazards and ensure preparedness in case of emergencies.',
       features: [
         'Comprehensive safety protection',
@@ -806,7 +828,7 @@ const ProductsSection = ({ setSelectedProduct }) => {
     },
     {
       title: 'Fire Safety & Protection',
-      supplier: 'AAG India, Chhatariya, Enersafe',
+      supplier: 'AAG India, Chhatariya',
       description: 'Our fire safety solutions safeguard people and assets through advanced prevention, detection, and suppression systems. From extinguishers to alarms and hydrants, we deliver comprehensive fire protection.',
       features: [
         'Advanced detection systems',
@@ -825,7 +847,7 @@ const ProductsSection = ({ setSelectedProduct }) => {
     },
     {
       title: 'Marine Safety Equipment',
-      supplier: 'Marine India',
+      supplier: 'Multiple Vendors',
       description: 'Built for maritime conditions, our marine safety products meet international standards for reliability at sea. Life jackets, rafts, beacons, and navigation aids ensure safety in offshore and marine operations.',
       features: [
         'International maritime standards',
@@ -844,7 +866,7 @@ const ProductsSection = ({ setSelectedProduct }) => {
     },
     {
       title: 'Material Handling & Mobility',
-      supplier: 'Everett Tyres',
+      supplier: 'Multiple Vendors',
       description: 'We offer a wide range of industrial wheels, tyres, and trolleys to simplify material movement. Engineered for strength and smooth operation, our solutions support safe and efficient handling.',
       features: [
         'Heavy-duty construction',
@@ -863,7 +885,7 @@ const ProductsSection = ({ setSelectedProduct }) => {
     },
     {
       title: 'Specialized Safety Equipment',
-      supplier: 'Jarsh Safety, The Mask Lab',
+      supplier: 'Magnum, The Mask Lab',
       description: 'For industries that demand advanced protection, we supply specialized safety gear such as respirators, breathing apparatus, and high-grade helmets. These products ensure maximum safety in high-risk environments.',
       features: [
         'Advanced protection technology',
@@ -1058,7 +1080,7 @@ const QualitySection = () => (
     <SectionHeader title="Quality & Certifications" subtitle="Our commitment to excellence and industry standards." />
     <div className="bg-white rounded-xl shadow-xl p-6 md:p-8 lg:p-12 text-center">
       <p className="text-base md:text-lg leading-relaxed text-gray-700 mb-6 md:mb-8">
-        We meet the highest industry standards to ensure safety and performance.
+      We associate with the vendors with highest industry standards to ensure safety and precision and performance.
       </p>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-6 md:mb-8">
         <QualityBadge title="ISO 9001:2015 Certified" />
@@ -1236,6 +1258,7 @@ const ContactForm = () => {
     company: '',
     email: '',
     phone: '',
+    // address: '',
     message: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -1245,6 +1268,7 @@ const ContactForm = () => {
     company: '',
     email: '',
     phone: '',
+    address: '',
     message: ''
   });
 
@@ -1265,10 +1289,11 @@ const ContactForm = () => {
       company: (data.company || '').trim(),
       email: (data.email || '').trim(),
       phone: (data.phone || '').trim(),
+      // address: (data.address || '').trim(),
       message: (data.message || '').trim()
     };
 
-    const newErrors = { name: '', company: '', email: '', phone: '', message: '' };
+    const newErrors = { name: '', company: '', email: '', phone: '', address: '', message: '' };
 
     if (!trimmed.name || trimmed.name.length < 2) {
       newErrors.name = 'Please enter your full name (min 2 characters).';
@@ -1282,6 +1307,9 @@ const ContactForm = () => {
     if (!trimmed.phone || !validatePhone(trimmed.phone)) {
       newErrors.phone = 'Please enter a valid phone number (7-15 digits).';
     }
+    // if (!trimmed.address || trimmed.address.length < 5) {
+    //   newErrors.address = 'Please enter your address (min 5 characters).';
+    // }
     if (!trimmed.message || trimmed.message.length < 10) {
       newErrors.message = 'Message should be at least 10 characters.';
     }
@@ -1314,6 +1342,7 @@ const ContactForm = () => {
       company: formData.company.trim(),
       email: formData.email.trim(),
       phone: formData.phone.trim(),
+      // address: formData.address.trim(),
       message: formData.message.trim()
     };
 
@@ -1342,9 +1371,10 @@ const ContactForm = () => {
           company: '',
           email: '',
           phone: '',
+          // address: '',
           message: ''
         });
-        setErrors({ name: '', company: '', email: '', phone: '', message: '' });
+        setErrors({ name: '', company: '', email: '', phone: '', address: '', message: '' });
       } else {
         setSubmitStatus('error');
         console.error('Email sending failed:', result.message);
@@ -1379,6 +1409,16 @@ const ContactForm = () => {
         required
       />
       {errors.company && <p className="text-red-600 text-xs md:text-sm">{errors.company}</p>}
+      {/* <textarea
+        name="address"
+        placeholder="Address"
+        rows="2"
+        value={formData.address}
+        onChange={handleInputChange}
+        className={`w-full p-3 rounded-lg border ${errors.address ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-2 ${errors.address ? 'focus:ring-red-500' : 'focus:ring-indigo-500'} text-sm md:text-base resize-none`}
+        required
+      ></textarea>
+      {errors.address && <p className="text-red-600 text-xs md:text-sm">{errors.address}</p>} */}
       <input
         type="email"
         name="email"
@@ -1456,13 +1496,19 @@ const ContactSection = () => {
           <h3 className="text-lg md:text-xl font-bold text-gray-800 mb-4">Head Office</h3>
           <div className="space-y-3">
             <p className="text-sm md:text-base text-gray-600">
-              <span className="font-semibold">Address:</span> [Insert Address]
+              <span className="font-semibold">Address:</span> 138, Kumaranaasan Nagar Post Box No. 2061 Kadavanthara P. O. Cochin- 682020
             </p>
             <p className="text-sm md:text-base text-gray-600">
-              <span className="font-semibold">Phone:</span> [Insert Number]
+              <span className="font-semibold">Tel:</span> 91-484-2203239
             </p>
             <p className="text-sm md:text-base text-gray-600">
-              <span className="font-semibold">Email:</span> [Insert Email]
+              <span className="font-semibold">Mobile:</span> 9847031023
+            </p>
+            <p className="text-sm md:text-base text-gray-600">
+              <span className="font-semibold">Fax:</span> 91-484-2204385
+            </p>
+            <p className="text-sm md:text-base text-gray-600">
+              <span className="font-semibold">Email:</span> shreebharatraj@gmail.com
             </p>
           </div>
         </div>
@@ -1507,7 +1553,7 @@ const ProductModal = ({ product, onClose }) => {
         ]
       },
       'Pipes & Pipe Systems': {
-        supplier: 'Chamunda Plastics, Keshar Steel India',
+        supplier: 'Chamunda Plastics, Poonam Industries',
         categories: [
           {
             title: 'Plastic Pipes',
@@ -1676,8 +1722,8 @@ const ProductModal = ({ product, onClose }) => {
           }
         ]
       },
-      'Protective Covers & Sheets': {
-        supplier: 'Dwarkadas Velji Talpatriwala',
+      'Nylon & HDPE Tarpaulin': {
+        supplier: 'Lamifab Industries, Shivam Textiles & Proofing Industries',
         categories: [
           {
             title: 'Tarpaulin Sheets',
@@ -1724,7 +1770,7 @@ const ProductModal = ({ product, onClose }) => {
         ]
       },
       'Workplace Safety & First Aid': {
-        supplier: 'AOSSPL, Safe Dot India, ATG Glove Solutions',
+        supplier: 'AOSSPL, ATG Glove Solutions',
         categories: [
           {
             title: 'First Aid Equipment',
@@ -1747,7 +1793,7 @@ const ProductModal = ({ product, onClose }) => {
         ]
       },
       'Fire Safety & Protection': {
-        supplier: 'AAG India, Chhatariya, Enersafe',
+        supplier: 'AAG India, Chhatariya',
         categories: [
           {
             title: 'Fire Fighting Equipment',
@@ -1771,7 +1817,7 @@ const ProductModal = ({ product, onClose }) => {
         ]
       },
       'Marine Safety Equipment': {
-        supplier: 'Marine India (marine-india.com)',
+        supplier: 'Multiple Vendors',
         categories: [
           {
             title: 'Marine Safety Systems',
@@ -1794,7 +1840,7 @@ const ProductModal = ({ product, onClose }) => {
         ]
       },
       'Material Handling & Mobility': {
-        supplier: 'Everett Tyres (everettyres.com)',
+        supplier: 'Multiple Vendors',
         categories: [
           {
             title: 'Industrial Wheels & Tyres',
@@ -1817,7 +1863,7 @@ const ProductModal = ({ product, onClose }) => {
         ]
       },
       'Specialized Safety Equipment': {
-        supplier: 'Jarsh Safety, The Mask Lab',
+        supplier: 'Magnum, The Mask Lab',
         categories: [
           {
             title: 'Respiratory Protection',

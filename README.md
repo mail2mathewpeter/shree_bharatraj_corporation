@@ -71,6 +71,43 @@ The application will be available at:
 - Frontend: http://localhost:3000
 - Backend API: http://localhost:5000
 
+### Flask Backend (Python) – Alternative to Node
+
+You can run the backend using Flask for simpler deployment.
+
+1) Create a virtual environment and install dependencies:
+
+```bash
+python -m venv .venv
+.\.venv\Scripts\activate
+pip install -r requirements.txt
+```
+
+2) Copy `env.example` to `.env` and set:
+
+```ini
+SMTP_HOST=...
+SMTP_PORT=587
+SMTP_USER=...
+SMTP_PASS=...
+RECIPIENT_EMAIL=...
+PORT=5000
+NODE_ENV=development
+```
+
+3) Start Flask API:
+
+```bash
+python server/app.py
+```
+
+Endpoints:
+- POST `/api/send-email`
+- GET `/api/health`
+- POST `/api/test-email` (disabled in production)
+
+Frontend should point `REACT_APP_API_URL` to the Flask URL (e.g., `http://localhost:5000`).
+
 ## SMTP Configuration Options
 
 ### Gmail (Recommended)
