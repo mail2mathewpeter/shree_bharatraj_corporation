@@ -77,7 +77,7 @@ const App = () => {
   return (
     <div className="bg-gray-100 font-sans antialiased text-gray-800 min-h-screen">
       {/* Navigation Bar */}
-      <nav className="bg-white/90 backdrop-blur-md sticky top-0 z-50 shadow-lg border-b border-gray-200/50">
+      <nav className="bg-white sticky top-0 z-50 shadow-lg border-b border-gray-200/50">
         <div className="container mx-auto px-4 py-3.5 flex items-center justify-between">
           <div className="flex items-center">
             <div className="ml-10 cursor-pointer" onClick={() => setCurrentPage('home')}>
@@ -542,6 +542,17 @@ const HomeSection = ({ setCurrentPage }) => {
       <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-xl p-6 md:p-8 lg:p-12 border border-indigo-200/50">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12">
           <div>
+            <div className="flex items-center justify-start mb-6">
+              <img 
+                src="/attachments/logo.jpeg" 
+                alt="Shree Bharatraj Corporation Logo" 
+                className="h-16 w-auto md:h-20 object-contain"
+                onError={(e) => {
+                  console.log('Logo failed to load');
+                  e.target.style.display = 'none';
+                }}
+              />
+            </div>
             <h3 className="text-lg md:text-xl font-bold text-gray-800 mb-4">Head Office</h3>
             <div className="space-y-3">
               <p className="text-sm md:text-base text-gray-600">
@@ -1491,8 +1502,21 @@ const ContactSection = () => {
   return (
     <section id="contact" className="py-8 md:py-12 lg:py-20">
       <SectionHeader title="Contact Us" subtitle="Get in touch with our team for inquiries and support." />
-      <div className="bg-white rounded-xl shadow-xl p-6 md:p-8 lg:p-12 grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12">
+      <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-xl p-6 md:p-8 lg:p-12 border border-indigo-200/50 grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12">
         <div>
+          
+          <div className="flex items-center justify-start mb-6">
+            <img 
+              src="/attachments/logo.jpeg" 
+              alt="Shree Bharatraj Corporation Logo" 
+              className="h-16 w-auto md:h-20 object-contain"
+              onError={(e) => {
+                console.log('Logo failed to load');
+                e.target.style.display = 'none';
+              }}
+            />
+          </div>
+        
           <h3 className="text-lg md:text-xl font-bold text-gray-800 mb-4">Head Office</h3>
           <div className="space-y-3">
             <p className="text-sm md:text-base text-gray-600">
