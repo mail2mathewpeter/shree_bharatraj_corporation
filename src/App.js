@@ -1264,7 +1264,7 @@ const ClientsSection = () => {
 };
 
 const ContactForm = () => {
-  const API_URL = process.env.REACT_APP_API_URL || 'http:localhost:5000'
+ // const API_URL = process.env.REACT_APP_API_URL || 'http:localhost:5000'
   const API_URL = process.env.REACT_APP_API_URL || 'https://serverapi-phi.vercel.app'
   const [formData, setFormData] = useState({
     name: '',
@@ -1367,7 +1367,7 @@ const ContactForm = () => {
     }
 
     try {
-      const response = await fetch("http://127.0.0.1:5000/api/send-email", {
+     // const response = await fetch("http://127.0.0.1:5000/api/send-email", {
       const response = await fetch("https://serverapi-phi.vercel.app/api/send-email", {
         method: 'POST',
         headers: {
