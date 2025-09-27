@@ -159,7 +159,8 @@ const App = () => {
       {selectedProduct && (
         <ProductModal 
           product={selectedProduct} 
-          onClose={() => setSelectedProduct(null)} 
+          onClose={() => setSelectedProduct(null)}
+          onNavigateToContact={() => setCurrentPage('contact')}
         />
       )}
     </div>
@@ -1263,13 +1264,13 @@ const ClientsSection = () => {
 };
 
 const ContactForm = () => {
-  const API_URL = process.env.REACT_APP_API_URL || 'https://client1-server.onrender.com'
+  const API_URL = process.env.REACT_APP_API_URL || 'http:localhost:5000'
   const [formData, setFormData] = useState({
     name: '',
     company: '',
+    address: '',
     email: '',
     phone: '',
-    // address: '',
     message: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -1277,9 +1278,9 @@ const ContactForm = () => {
   const [errors, setErrors] = useState({
     name: '',
     company: '',
+    address: '',
     email: '',
     phone: '',
-    // address: '',
     message: ''
   });
 
@@ -1298,13 +1299,13 @@ const ContactForm = () => {
     const trimmed = {
       name: (data.name || '').trim(),
       company: (data.company || '').trim(),
+      address: (data.address || '').trim(),
       email: (data.email || '').trim(),
       phone: (data.phone || '').trim(),
-      // address: (data.address || '').trim(),
       message: (data.message || '').trim()
     };
 
-    const newErrors = { name: '', company: '', email: '', phone: '', address: '', message: '' };
+    const newErrors = { name: '', company: '', address: '', email: '', phone: '', message: '' };
 
     if (!trimmed.name || trimmed.name.length < 2) {
       newErrors.name = 'Please enter your full name (min 2 characters).';
@@ -1312,15 +1313,15 @@ const ContactForm = () => {
     if (!trimmed.company) {
       newErrors.company = 'Please enter your company name.';
     }
+    if (!trimmed.address || trimmed.address.length < 5) {
+      newErrors.address = 'Please enter your address (min 5 characters).';
+    }
     if (!trimmed.email || !validateEmail(trimmed.email)) {
       newErrors.email = 'Please enter a valid email (e.g., name@example.com).';
     }
     if (!trimmed.phone || !validatePhone(trimmed.phone)) {
       newErrors.phone = 'Please enter a valid phone number (7-15 digits).';
     }
-    // if (!trimmed.address || trimmed.address.length < 5) {
-    //   newErrors.address = 'Please enter your address (min 5 characters).';
-    // }
     if (!trimmed.message || trimmed.message.length < 10) {
       newErrors.message = 'Message should be at least 10 characters.';
     }
@@ -1351,9 +1352,9 @@ const ContactForm = () => {
     const payload = {
       name: formData.name.trim(),
       company: formData.company.trim(),
+      address: formData.address.trim(),
       email: formData.email.trim(),
       phone: formData.phone.trim(),
-      // address: formData.address.trim(),
       message: formData.message.trim()
     };
 
@@ -1365,7 +1366,7 @@ const ContactForm = () => {
     }
 
     try {
-      const response = await fetch(`${API_URL}/api/send-email`, {
+      const response = await fetch("http://127.0.0.1:5000/api/send-email", {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -1380,12 +1381,12 @@ const ContactForm = () => {
         setFormData({
           name: '',
           company: '',
+          address: '',
           email: '',
           phone: '',
-          // address: '',
           message: ''
         });
-        setErrors({ name: '', company: '', email: '', phone: '', address: '', message: '' });
+        setErrors({ name: '', company: '', address: '', email: '', phone: '', message: '' });
       } else {
         setSubmitStatus('error');
         console.error('Email sending failed:', result.message);
@@ -1420,7 +1421,7 @@ const ContactForm = () => {
         required
       />
       {errors.company && <p className="text-red-600 text-xs md:text-sm">{errors.company}</p>}
-      {/* <textarea
+      <textarea
         name="address"
         placeholder="Address"
         rows="2"
@@ -1429,7 +1430,7 @@ const ContactForm = () => {
         className={`w-full p-3 rounded-lg border ${errors.address ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-2 ${errors.address ? 'focus:ring-red-500' : 'focus:ring-indigo-500'} text-sm md:text-base resize-none`}
         required
       ></textarea>
-      {errors.address && <p className="text-red-600 text-xs md:text-sm">{errors.address}</p>} */}
+      {errors.address && <p className="text-red-600 text-xs md:text-sm">{errors.address}</p>}
       <input
         type="email"
         name="email"
@@ -1546,7 +1547,7 @@ const ContactSection = () => {
   );
 };
 
-const ProductModal = ({ product, onClose }) => {
+const ProductModal = ({ product, onClose, onNavigateToContact }) => {
   const { title, supplier, description, icon: Icon, image } = product;
 
   // Enhanced product data with detailed specifications
@@ -2067,7 +2068,7 @@ const ProductModal = ({ product, onClose }) => {
               <button
                 onClick={() => {
                   onClose();
-                  // You can add navigation to contact page here
+                  onNavigateToContact();
                 }}
                 className="bg-gradient-to-r from-indigo-600 to-blue-600 text-white font-semibold py-3 px-8 rounded-xl shadow-lg hover:from-indigo-700 hover:to-blue-700 hover:shadow-xl transition-all duration-300 transform hover:scale-105"
               >
